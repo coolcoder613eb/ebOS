@@ -1,0 +1,75 @@
+using System;
+
+public class Program
+{
+    private const string ver = "1.0.0";
+	public static void Main()
+	{
+		Program program = new Program();
+		
+		while (true)
+		{
+			Console.Write("C:> ");
+			string i = Console.ReadLine().ToLower();
+			switch (i)
+			{
+				//system commands
+				case "shutdown":
+					//Cosmos.Sys.Deboot.ShutDown()
+					Console.WriteLine("Shutting down...");
+					break;
+				case "reboot":
+					//Cosmos.Sys.Deboot.Reboot();
+					Console.WriteLine("Rebooting...");
+					break;
+				case "restart":
+					//Cosmos.Sys.Deboot.Reboot();
+					Console.WriteLine("Rebooting...");
+					break;
+				//info
+				case "about":
+                    program.about();
+					break;
+				case "ver":
+					program.about();
+					break;
+				case "help":
+					program.help();
+					break;
+				//no reason
+				case "hello":
+					Console.WriteLine("Hello World");
+					break;
+				case "zen":
+					Console.WriteLine("The Zen of Python, by Tim Peters\n\nBeautiful is better than ugly.\nExplicit is better than implicit.\nSimple is better than complex.\nComplex is better than complicated.\nFlat is better than nested.\nSparse is better than dense.\nReadability counts.\nSpecial cases aren't special enough to break the rules.\nAlthough practicality beats purity.\nErrors should never pass silently.\nUnless explicitly silenced.\nIn the face of ambiguity, refuse the temptation to guess.\nThere should be one-- and preferably only one --obvious way to do it.\nAlthough that way may not be obvious at first unless you're Dutch.\nNow is better than never.\nAlthough never is often better than *right* now.\nIf the implementation is hard to explain, it's a bad idea.\nIf the implementation is easy to explain, it may be a good idea.\nNamespaces are one honking great idea -- let's do more of those!");
+					break;
+
+				//default
+				default:
+					Console.WriteLine("No such command!");
+					break;
+
+			}
+			
+		}
+
+	}
+	void about()
+	{ 
+		Console.WriteLine("ebOS " + ver); 
+	}
+	void help()
+	{
+		Console.WriteLine("ebOS " + ver);
+		Console.WriteLine("\nsystem commands:\n" +
+			"shutdown - shut down\n" +
+			"reboot/restart - reboot the system\n" +
+			"\ninfo:\n" +
+			"about/ver - show version\n" +
+			"help - show this help message\n" +
+			"\nother:\n" +
+			"zen - show the zen of python");
+	//		"hello - display greeting\n" +
+	//		"zen - display zen of python\n");
+	}
+}
