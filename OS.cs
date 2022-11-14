@@ -22,14 +22,15 @@ public class Program
 
 ");
         Console.ForegroundColor = ConsoleColor.Blue;
-		Console.Write("   ");
+		Console.Write("  ");
 		program.about();
         Console.ForegroundColor = ConsoleColor.White;
         while (true)
 		{
 			Console.Write("0:> ");
 			string i = Console.ReadLine().ToLower();
-			switch (i)
+			string[] ilist = i.Split(' ');
+            switch (ilist[0])
 			{
 				//system commands
 				case "shutdown":
