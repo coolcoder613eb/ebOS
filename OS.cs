@@ -1,15 +1,33 @@
 using System;
+using System.IO;
 
+//in BeforeRun: Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
 public class Program
 {
     private const string ver = "1.0.0";
-	public static void Main()
+    //Sys.FileSystem.CosmosVFS fs = new Sys.FileSystem.CosmosVFS();
+    public static void Main()
 	{
 		Program program = new Program();
-		
-		while (true)
+		Console.ForegroundColor = ConsoleColor.Green;
+		Console.WriteLine(@"
+           ##
+           ##         ###     #####
+           ##        ## ##   ##   ##
+   #####   ######   ##   ##  ##
+  ##   ##  ##   ##  ##   ##   #####
+  #######  ##   ##  ##   ##       ##
+  ##       ##   ##   ## ##   ##   ##
+   #####   ######     ###     #####
+
+");
+        Console.ForegroundColor = ConsoleColor.Blue;
+		Console.Write("   ");
+		program.about();
+        Console.ForegroundColor = ConsoleColor.White;
+        while (true)
 		{
-			Console.Write("C:> ");
+			Console.Write("0:> ");
 			string i = Console.ReadLine().ToLower();
 			switch (i)
 			{
@@ -46,7 +64,7 @@ public class Program
 
 				//default
 				default:
-					Console.WriteLine("No such command!");
+					Console.WriteLine(i+" is not a command!");
 					break;
 
 			}
