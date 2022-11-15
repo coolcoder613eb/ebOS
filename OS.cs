@@ -62,7 +62,7 @@ public class Program
                     }
                     else
                     {
-						program.getdir()
+						program.getdir(Directory.GetCurrentDirectory())
                     }
 					program.about();
 					break;

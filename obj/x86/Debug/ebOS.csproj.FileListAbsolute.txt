@@ -10,3 +10,5 @@ C:\Users\Student\Documents\GitHub\ebOS\obj\x86\Debug\ebOS.csproj.AssemblyReferen
 C:\Users\Student\Documents\GitHub\ebOS\obj\x86\Debug\ebOS.csproj.CoreCompileInputs.cache
 C:\Users\Student\Documents\GitHub\ebOS\obj\x86\Debug\ConsoleApplication.exe
 C:\Users\Student\Documents\GitHub\ebOS\obj\x86\Debug\ConsoleApplication.pdb
+C:\Users\tzema\OneDrive\Documents\GitHub\ebOS\obj\x86\Debug\ConsoleApplication.exe
+C:\Users\tzema\OneDrive\Documents\GitHub\ebOS\obj\x86\Debug\ConsoleApplication.pdb
