@@ -55,6 +55,17 @@ public class Program
 				case "help":
 					program.help();
 					break;
+				case "dir":
+					if (!(ilist.Length > 1))
+                    {
+						program.getdir(ilist[1])
+                    }
+                    else
+                    {
+						program.getdir()
+                    }
+					program.about();
+					break;
 				//no reason
 				case "hello":
 					Console.WriteLine("Hello World");
@@ -77,6 +88,11 @@ public class Program
 	{ 
 		Console.WriteLine("ebOS " + ver); 
 	}
+	string[] getdir(string path)
+    {
+		string[] dirs = Directory.GetFileSystemEntries(path);
+		return dirs;
+    }
 	void help()
 	{
 		Console.WriteLine("ebOS " + ver);
