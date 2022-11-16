@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.IO;
+//using System.IO;
 using Sys = Cosmos.System;
 
 namespace ebOS
@@ -11,7 +11,7 @@ namespace ebOS
 		private const string ver = "1.0.0";
 		protected override void BeforeRun()
         {
-            Console.WriteLine("Cosmos booted successfully. Type a line of text to get it echoed back.");
+            Console.WriteLine("ebOS booted successfully.");
         }
 
         protected override void Run()
@@ -20,61 +20,65 @@ namespace ebOS
 			{
 				Console.WriteLine("ebOS " + ver);
 			}
-			string[] getdir(string path)
+			/*string[] getdir(string path)
 			{
 				string[] dirs = Directory.GetFileSystemEntries(path);
 				return dirs;
-			}
+			}*/
 			void help()
 			{
 				Console.WriteLine("ebOS " + ver);
-				Console.WriteLine("\nsystem commands:\n" +
-					"shutdown - shut down\n" +
-					"reboot/restart - reboot the system\n" +
-					"\ninfo:\n" +
-					"about/ver - show version\n" +
-					"help - show this help message\n" +
-					"\nother:\n" +
-					"zen - show the zen of python");
+				Console.WriteLine(@"system commands:
+shutdown - shut down
+reboot/restart - reboot the system
+
+info:
+about/ver - show version
+help - show this help message
+					
+other:
+zen - show the zen of python
+");
 				//		"hello - display greeting\n" +
 				//		"zen - display zen of python\n");
 			}
-			Kernel program = new Kernel();
+			Console.Clear();
 			Console.ForegroundColor = ConsoleColor.Green;
-			Console.WriteLine(@"
+			string ebos = @"
            ##
-           ##         ###     #####
-           ##        ## ##   ##   ##
-   #####   ######   ##   ##  ##
-  ##   ##  ##   ##  ##   ##   #####
-  #######  ##   ##  ##   ##       ##
-  ##       ##   ##   ## ##   ##   ##
-   #####   ######     ###     #####
+           ##         ####     #####
+           ##        ##  ##   ##   ##
+   #####   ######   ##    ##  ##
+  ##   ##  ##   ##  ##    ##   #####
+  #######  ##   ##  ##    ##       ##
+  ##       ##   ##   ##  ##   ##   ##
+   #####   ######     ####     #####
 
-");
+";
+			Console.WriteLine(ebos);
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.Write("  ");
 			about();
 			Console.ForegroundColor = ConsoleColor.White;
 			while (true)
 			{
-				Console.Write("0:> ");
+				Console.Write("ebOS:> ");
 				string i = Console.ReadLine().ToLower();
 				string[] ilist = i.Split(' ');
 				switch (ilist[0])
 				{
 					//system commands
 					case "shutdown":
-						//Cosmos.Sys.Deboot.ShutDown()
 						Console.WriteLine("Shutting down...");
+						Sys.Power.Shutdown();
 						break;
 					case "reboot":
-						//Cosmos.Sys.Deboot.Reboot();
 						Console.WriteLine("Rebooting...");
+						Sys.Power.Reboot();
 						break;
 					case "restart":
-						//Cosmos.Sys.Deboot.Reboot();
 						Console.WriteLine("Rebooting...");
+						Sys.Power.Reboot();
 						break;
 					//info
 					case "about":
@@ -86,6 +90,7 @@ namespace ebOS
 					case "help":
 						help();
 						break;
+					/*
 					case "dir":
 						if (!(ilist.Length > 1))
 						{
@@ -98,6 +103,12 @@ namespace ebOS
 
 						}
 						about();
+						break;
+					*/
+					//apps
+					case "calc":
+						Calc calc = new Calc();
+                        calc.Run();
 						break;
 					//no reason
 					case "hello":
