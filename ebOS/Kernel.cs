@@ -11,6 +11,7 @@ namespace ebOS
     {
 		private const string ver = "1.0.0";
 		private const string calcver = "1.0.0";
+		private const string cryptver = "1.0.0";
 		protected override void BeforeRun()
         {
             Console.WriteLine("ebOS booted successfully.");
@@ -43,6 +44,7 @@ zen - show the zen of python
 
 terminal:
 cls - clear terminal
+echo - echo text
 
 apps:
 calc - calculator 
@@ -122,9 +124,20 @@ calc - calculator
 						break;
 					//apps
 					case "calc":
-						Console.WriteLine("calc " + ver);
+						Console.WriteLine("calc " + calcver);
 						Console.WriteLine("Evaluate expression:");
 						EvaluateString.Run();
+						break;
+					case "crypt":
+						Console.WriteLine("crypt " + cryptver);
+						Console.Write("Encrypt or decrypt? ");
+						string input = Console.ReadLine();
+						if (input == "encrypt")
+                        {
+							Console.Write("text: ");
+							string textinput = Console.ReadLine();
+							Console.WriteLine(Encrypt.EncryptString(textinput));
+						}
 						break;
 					//no reason
 					case "hello":
