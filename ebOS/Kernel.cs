@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 //using System.IO;
 using Sys = Cosmos.System;
@@ -9,6 +10,7 @@ namespace ebOS
     public class Kernel : Sys.Kernel
     {
 		private const string ver = "1.0.0";
+		private const string calcver = "1.0.0";
 		protected override void BeforeRun()
         {
             Console.WriteLine("ebOS booted successfully.");
@@ -27,7 +29,7 @@ namespace ebOS
 			}*/
 			void help()
 			{
-				Console.WriteLine("ebOS " + ver);
+				Console.WriteLine("ebOS " + ver+"\n");
 				Console.WriteLine(@"system commands: 
 shutdown - shut down
 reboot/restart - reboot the system
@@ -38,6 +40,9 @@ help - show this help message
 					
 other:
 zen - show the zen of python
+
+terminal:
+cls - clear terminal
 
 apps:
 calc - calculator 
@@ -112,8 +117,13 @@ calc - calculator
 					case "cls":
 						Console.Clear();
 						break;
+					case "echo":
+						Console.WriteLine(i.Remove(0, 5));
+						break;
 					//apps
 					case "calc":
+						Console.WriteLine("calc " + ver);
+						Console.WriteLine("Evaluate expression:");
 						EvaluateString.Run();
 						break;
 					//no reason
