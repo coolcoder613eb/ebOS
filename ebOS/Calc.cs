@@ -3,124 +3,187 @@ using System.Collections.Generic;
 using System.Text;
 //using System.IO;
 using Sys = Cosmos.System;
+// C# program to evaluate a given expression
+
 namespace ebOS
 {
-    public class Calc
+    public class EvaluateString
     {
-        string expr;
-        int pos;
-        bool IsError = true;
-        public int Run()
+        public static string Evaluate(string expression)
         {
-            if (IsError) {
-                int ans;
-                do
+            char[] tokens = expression.ToCharArray();
+
+            // Stack for numbers: 'values'
+            Stack<float> values = new Stack<float>();
+
+            // Stack for Operators: 'ops'
+            Stack<char> ops = new Stack<char>();
+
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                // Current token is a whitespace, skip it
+                if (tokens[i] == ' ')
                 {
-                    pos = 0;
-                    Console.Write("Enter expression (0 to quit): ");
-                    expr = Console.ReadLine();
-                    ans = addsubt();
-                    if (expr[index: pos] != '0')
+                    continue;
+                }
+
+                // Current token is a number,
+                // push it to stack for numbers
+                if (tokens[i] >= '0' && tokens[i] <= '9')
+                {
+                    StringBuilder sbuf = new StringBuilder();
+
+                    // There may be more than
+                    // one digits in number
+                    while (i < tokens.Length &&
+                            tokens[i] >= '0' &&
+                                tokens[i] <= '9')
                     {
-                        error();
+                        sbuf.Append(tokens[i++]);
                     }
-                    if (ans != 0)
+                    values.Push(int.Parse(sbuf.ToString()));
+
+                    // Right now the i points to
+                    // the character next to the digit,
+                    // since the for loop also increases
+                    // the i, we would skip one
+                    //  token position; we need to
+                    // decrease the value of i by 1 to
+                    // correct the offset.
+                    i--;
+                }
+
+                // Current token is an opening
+                // brace, push it to 'ops'
+                else if (tokens[i] == '(')
+                {
+                    ops.Push(tokens[i]);
+                }
+
+                // Closing brace encountered,
+                // solve entire brace
+                else if (tokens[i] == ')')
+                {
+                    while (ops.Peek() != '(')
                     {
-                        Console.WriteLine(ans.ToString());
+                        values.Push(applyOp(ops.Pop(),
+                                         values.Pop(),
+                                        values.Pop()));
                     }
+                    ops.Pop();
                 }
-                while (ans != 0);
-                    return 0;
-            }
-            else
-            {
-                return 15;
-            }
-        }
-        int addsubt()
-        {
-            if (IsError)
-            {
-                int rtn = Multdiv();
-            while (expr[index: pos] == '+' && expr[index: pos] == '-')
-            {
-                int op = expr[index: pos++];
-                int opr2 = Multdiv();
-                if (op == '+')
+
+                // Current token is an operator.
+                else if (tokens[i] == '+' ||
+                         tokens[i] == '-' ||
+                         tokens[i] == '*' ||
+                         tokens[i] == '/')
                 {
-                    rtn += opr2;
-                }
-                else
-                {
-                    rtn -= opr2;
-                }
-            }
-            return rtn;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        int Multdiv()
-        {
-                if (IsError)
-                {
-                    int rtn = number();
-            while (expr[index: pos] == '*' && expr[index: pos] == '/')
-            {
-                int op = expr[index: pos++];
-                int opr2 = number();
-                if (op == '*')
-                {
-                    rtn *= opr2;
-                }
-                else
-                {
-                    rtn /= opr2;
-                }
-            }
-            return rtn;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        int number()
-        {
-                    if (IsError)
+
+                    // While top of 'ops' has same
+                    // or greater precedence to current
+                    // token, which is an operator.
+                    // Apply operator on top of 'ops'
+                    // to top two elements in values stack
+                    while (ops.Count > 0 &&
+                             hasPrecedence(tokens[i],
+                                         ops.Peek()))
                     {
-                        int rtn;
-            if (expr[index: pos] == '(')
-            {
-                pos++;
-                rtn = addsubt();
-                if (expr[index: pos] != ')')
-                {
-                    error();
-                    return rtn;
+                        values.Push(applyOp(ops.Pop(),
+                                         values.Pop(),
+                                       values.Pop()));
+                    }
+
+                    // Push current token to 'ops'.
+                    ops.Push(tokens[i]);
                 }
             }
-            if (!char.IsDigit(expr[index: pos]))
+
+            // Entire expression has been
+            // parsed at this point, apply remaining
+            // ops to remaining values
+            while (ops.Count > 0)
             {
-                error();
+                values.Push(applyOp(ops.Pop(),
+                                 values.Pop(),
+                                values.Pop()));
             }
-            rtn = int.Parse(expr + pos);
-            while(char.IsDigit(expr[index: pos]))
+
+            // Top of 'values' contains
+            // result, return it
+            return expression + " = " + values.Pop().ToString();
+        }
+
+        // Returns true if 'op2' has
+        // higher or same precedence as 'op1',
+        // otherwise returns false.
+        public static bool hasPrecedence(char op1,
+                                         char op2)
+        {
+            if (op2 == '(' || op2 == ')')
             {
-                pos++;
+                return false;
             }
-            return rtn;
+            if ((op1 == '*' || op1 == '/') &&
+                   (op2 == '+' || op2 == '-'))
+            {
+                return false;
             }
             else
             {
-                return 0;
+                return true;
             }
         }
-        void error()
+
+        // A utility method to apply an
+        // operator 'op' on operands 'a' 
+        // and 'b'. Return the result.
+        public static float applyOp(char op,
+                                float b, float a)
         {
-            IsError = false;
+            switch (op)
+            {
+                case '+':
+                    return a + b;
+                case '-':
+                    return a - b;
+                case '*':
+                    return a * b;
+                case '/':
+                    if (b == 0)
+                    {
+                        throw new
+                        System.NotSupportedException(
+                               "Cannot divide by zero");
+                    }
+                    return a / b;
+            }
+            return 0;
+        }
+
+        // Driver method to test above methods
+        public static void Run()
+        {
+            string i;
+            string ans;
+            bool KeepRunning = true;
+            while (KeepRunning)
+            {
+                Console.Write("> ");
+                i = Console.ReadLine();
+                try
+                { 
+                    ans = Evaluate(i).ToString();
+                    Console.WriteLine(ans);
+                }
+                catch (Exception)
+                {
+                    KeepRunning = false;
+                    Console.WriteLine("Error: syntax error");
+                }
+                
+                
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ namespace ebOS
 			void help()
 			{
 				Console.WriteLine("ebOS " + ver);
-				Console.WriteLine(@"system commands:
+				Console.WriteLine(@"system commands: 
 shutdown - shut down
 reboot/restart - reboot the system
 
@@ -38,6 +38,9 @@ help - show this help message
 					
 other:
 zen - show the zen of python
+
+apps:
+calc - calculator 
 ");
 				//		"hello - display greeting\n" +
 				//		"zen - display zen of python\n");
@@ -105,10 +108,13 @@ zen - show the zen of python
 						about();
 						break;
 					*/
+					//terminal
+					case "cls":
+						Console.Clear();
+						break;
 					//apps
 					case "calc":
-						Calc calc = new Calc();
-                        calc.Run();
+						EvaluateString.Run();
 						break;
 					//no reason
 					case "hello":
