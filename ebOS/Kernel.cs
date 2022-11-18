@@ -12,6 +12,7 @@ namespace ebOS
 		private const string ver = "1.0.0";
 		private const string calcver = "1.0.0";
 		private const string cryptver = "1.0.0";
+
 		protected override void BeforeRun()
         {
             Console.WriteLine("ebOS booted successfully.");
@@ -19,39 +20,13 @@ namespace ebOS
 
         protected override void Run()
         {
-			void about()
-			{
-				Console.WriteLine("ebOS " + ver);
-			}
+			
 			/*string[] getdir(string path)
 			{
 				string[] dirs = Directory.GetFileSystemEntries(path);
 				return dirs;
 			}*/
-			void help()
-			{
-				Console.WriteLine("ebOS " + ver+"\n");
-				Console.WriteLine(@"system commands: 
-shutdown - shut down
-reboot/restart - reboot the system
-
-info:
-about/ver - show version
-help - show this help message
-					
-other:
-zen - show the zen of python
-
-terminal:
-cls - clear terminal
-echo - echo text
-
-apps:
-calc - calculator 
-");
-				//		"hello - display greeting\n" +
-				//		"zen - display zen of python\n");
-			}
+			
 			Console.Clear();
 			Console.ForegroundColor = ConsoleColor.Green;
 			string ebos = @"
@@ -72,6 +47,7 @@ calc - calculator
 			Console.ForegroundColor = ConsoleColor.White;
 			while (true)
 			{
+				
 				Console.Write("ebOS:> ");
 				string i = Console.ReadLine().ToLower();
 				string[] ilist = i.Split(' ');
@@ -124,20 +100,17 @@ calc - calculator
 						break;
 					//apps
 					case "calc":
+						//Console.ForegroundColor = ConsoleColor.Blue;
 						Console.WriteLine("calc " + calcver);
+						//Console.ForegroundColor = ConsoleColor.White;
 						Console.WriteLine("Evaluate expression:");
 						EvaluateString.Run();
 						break;
 					case "crypt":
+						//Console.ForegroundColor = ConsoleColor.Blue;
 						Console.WriteLine("crypt " + cryptver);
-						Console.Write("Encrypt or decrypt? ");
-						string input = Console.ReadLine();
-						if (input == "encrypt")
-                        {
-							Console.Write("text: ");
-							string textinput = Console.ReadLine();
-							Console.WriteLine(Encrypt.EncryptString(textinput));
-						}
+						//Console.ForegroundColor = ConsoleColor.White;
+						Encrypt.Run();
 						break;
 					//no reason
 					case "hello":
@@ -146,16 +119,46 @@ calc - calculator
 					case "zen":
 						Console.WriteLine("The Zen of Python, by Tim Peters\n\nBeautiful is better than ugly.\nExplicit is better than implicit.\nSimple is better than complex.\nComplex is better than complicated.\nFlat is better than nested.\nSparse is better than dense.\nReadability counts.\nSpecial cases aren't special enough to break the rules.\nAlthough practicality beats purity.\nErrors should never pass silently.\nUnless explicitly silenced.\nIn the face of ambiguity, refuse the temptation to guess.\nThere should be one-- and preferably only one --obvious way to do it.\nAlthough that way may not be obvious at first unless you're Dutch.\nNow is better than never.\nAlthough never is often better than *right* now.\nIf the implementation is hard to explain, it's a bad idea.\nIf the implementation is easy to explain, it may be a good idea.\nNamespaces are one honking great idea -- let's do more of those!");
 						break;
-
 					//default
 					default:
+						Console.ForegroundColor = ConsoleColor.Red;
 						Console.WriteLine(i + " is not a command!");
+						Console.ForegroundColor = ConsoleColor.White;
 						break;
 
 				}
 			}
         }
-		
-		
+		static void about()
+		{
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("ebOS " + ver);
+			Console.ForegroundColor = ConsoleColor.White;
+		}
+		static void help()
+		{
+			Console.WriteLine("ebOS " + ver + "\n");
+			Console.WriteLine(@"system commands: 
+shutdown - shut down
+reboot/restart - reboot the system
+
+info:
+about/ver - show version
+help - show this help message
+					
+other:
+zen - show the zen of python
+
+terminal:
+cls - clear terminal
+echo - echo text
+
+apps:
+calc - calculator 
+crypt - encrypt and decrypt messages");
+			//		"hello - display greeting\n" +
+			//		"zen - display zen of python\n");
+		}
+
 	}
 }
