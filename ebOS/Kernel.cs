@@ -49,7 +49,8 @@ namespace ebOS
 			{
 				
 				Console.Write("ebOS:> ");
-				string i = Console.ReadLine().ToLower();
+				string i1 = Console.ReadLine();
+				string i = i1.ToLower();
 				string[] ilist = i.Split(' ');
 				switch (ilist[0])
 				{
@@ -96,7 +97,7 @@ namespace ebOS
 						Console.Clear();
 						break;
 					case "echo":
-						Console.WriteLine(i.Remove(0, 5));
+						Console.WriteLine(i1.Remove(0, 5));
 						break;
 					//apps
 					case "calc":
@@ -122,10 +123,9 @@ namespace ebOS
 					//default
 					default:
 						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine(i + " is not a command!");
+						Console.WriteLine("\"" + i + "\"" + " is not a command!");
 						Console.ForegroundColor = ConsoleColor.White;
 						break;
-
 				}
 			}
         }
@@ -137,27 +137,39 @@ namespace ebOS
 		}
 		static void help()
 		{
-			Console.WriteLine("ebOS " + ver + "\n");
-			Console.WriteLine(@"system commands: 
-shutdown - shut down
-reboot/restart - reboot the system
-
-info:
-about/ver - show version
-help - show this help message
-					
-other:
-zen - show the zen of python
-
-terminal:
-cls - clear terminal
-echo - echo text
-
-apps:
-calc - calculator 
-crypt - encrypt and decrypt messages");
-			//		"hello - display greeting\n" +
-			//		"zen - display zen of python\n");
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("ebOS " + ver);
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("");
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("system commands: ");
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("shutdown - shut down");
+			Console.WriteLine("reboot/restart - reboot the system");
+			Console.WriteLine("");
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("info:");
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("about/ver - show version");
+			Console.WriteLine("help - show this help message");
+			Console.WriteLine("");
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("other:");
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("zen - show the zen of python");
+			Console.WriteLine("");
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("terminal:");
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("cls - clear terminal");
+			Console.WriteLine("echo - echo text");
+			Console.WriteLine("");
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("apps:");
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("calc - calculator ");
+			Console.WriteLine("crypt - encrypt and decrypt messages");
+			Console.ForegroundColor = ConsoleColor.White;
 		}
 
 	}
