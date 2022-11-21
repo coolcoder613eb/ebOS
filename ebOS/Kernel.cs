@@ -13,6 +13,8 @@ namespace ebOS
 		private const string calcver = "1.0.0";
 		private const string cryptver = "1.0.0";
 		private const string xoxver = "1.0.0";
+		static Dictionary<string, string> scripts = new Dictionary<string, string>();
+		
 
 		protected override void BeforeRun()
         {
@@ -21,13 +23,19 @@ namespace ebOS
 
         protected override void Run()
         {
-			
+			string[] p = { };
+			scripts.Add("ysnp", "cls\necho Gandalf - YOU SHALL NOT PASS!\necho Balrog - Why not?\npause\necho Gandalf - BECAUSE I'M IN A RUSH!");
+			scripts.Add("s", "echo Scripts:\nterm list");
+			/*scripts.Add("ysnp", @"echo Gandalf - YOU SHALL NOT PASS!
+echo Balrog - Why not?
+pause
+echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 			/*string[] getdir(string path)
 			{
 				string[] dirs = Directory.GetFileSystemEntries(path);
 				return dirs;
 			}*/
-			
+
 			Console.Clear();
 			Console.ForegroundColor = ConsoleColor.Green;
 			string ebos = @"
@@ -46,95 +54,193 @@ namespace ebOS
 			Console.Write("  ");
 			about();
 			Console.ForegroundColor = ConsoleColor.White;
+			string[] inputs = p;
+			bool isscript = false;
+			string i2 = "";
 			while (true)
 			{
 				
-				Console.Write("ebOS:> ");
-				string i1 = Console.ReadLine();
-				string i = i1.ToLower();
-				string[] ilist = i.Split(' ');
-				switch (ilist[0])
+				if (!isscript)
 				{
-					//system commands
-					case "shutdown":
-						Console.WriteLine("Shutting down...");
-						Sys.Power.Shutdown();
-						break;
-					case "reboot":
-						Console.WriteLine("Rebooting...");
-						Sys.Power.Reboot();
-						break;
-					case "restart":
-						Console.WriteLine("Rebooting...");
-						Sys.Power.Reboot();
-						break;
-					//info
-					case "about":
-						about();
-						break;
-					case "ver":
-						about();
-						break;
-					case "help":
-						help();
-						break;
-					/*
-					case "dir":
-						if (!(ilist.Length > 1))
-						{
-							getdir(ilist[1]);
-
-						}
-						else
-						{
-							getdir(Directory.GetCurrentDirectory());
-
-						}
-						about();
-						break;
-					*/
-					//terminal
-					case "cls":
-						Console.Clear();
-						break;
-					case "echo":
-						Console.WriteLine(i1.Remove(0, 5));
-						break;
-					//apps
-					case "calc":
-						//Console.ForegroundColor = ConsoleColor.Blue;
-						Console.WriteLine("calc " + calcver);
-						//Console.ForegroundColor = ConsoleColor.White;
-						Console.WriteLine("Evaluate expression:");
-						EvaluateString.Run();
-						break;
-					case "crypt":
-						//Console.ForegroundColor = ConsoleColor.Blue;
-						Console.WriteLine("crypt " + cryptver);
-						//Console.ForegroundColor = ConsoleColor.White;
-						Encrypt.Run();
-						break;
-					//games
-					case "xox":
-						//Console.ForegroundColor = ConsoleColor.Blue;
-						Console.WriteLine("xox " + xoxver);
-						//Console.ForegroundColor = ConsoleColor.White;
-						XOX.Run();
-						break;
-					//no reason
-					case "hello":
-						Console.WriteLine("Hello World");
-						break;
-					case "zen":
-						Console.WriteLine("The Zen of Python, by Tim Peters\n\nBeautiful is better than ugly.\nExplicit is better than implicit.\nSimple is better than complex.\nComplex is better than complicated.\nFlat is better than nested.\nSparse is better than dense.\nReadability counts.\nSpecial cases aren't special enough to break the rules.\nAlthough practicality beats purity.\nErrors should never pass silently.\nUnless explicitly silenced.\nIn the face of ambiguity, refuse the temptation to guess.\nThere should be one-- and preferably only one --obvious way to do it.\nAlthough that way may not be obvious at first unless you're Dutch.\nNow is better than never.\nAlthough never is often better than *right* now.\nIf the implementation is hard to explain, it's a bad idea.\nIf the implementation is easy to explain, it may be a good idea.\nNamespaces are one honking great idea -- let's do more of those!");
-						break;
-					//default
-					default:
-						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine("\"" + i1 + "\"" + " is not a command!");
-						Console.ForegroundColor = ConsoleColor.White;
-						break;
+					Console.Write("ebOS:> ");
+					i2 = Console.ReadLine();
+					string[] f = { i2 };
+					inputs = f;
 				}
+				isscript = false;
+				
+				string[] inputs2 = { i2 };
+
+				foreach (string i1 in inputs)
+                {
+					string i = i1.ToLower();
+					string[] ilist = i.Split(' ');
+					switch (ilist[0])
+					{
+						//system commands
+						case "shutdown":
+							Console.WriteLine("Shutting down...");
+							Sys.Power.Shutdown();
+							break;
+						case "reboot":
+							Console.WriteLine("Rebooting...");
+							Sys.Power.Reboot();
+							break;
+						case "restart":
+							Console.WriteLine("Rebooting...");
+							Sys.Power.Reboot();
+							break;
+						//info
+						case "about":
+							about();
+							break;
+						case "ver":
+							about();
+							break;
+						case "help":
+							help();
+							break;
+						/*
+						case "dir":
+							if (!(ilist.Length > 1))
+							{
+								getdir(ilist[1]);
+
+							}
+							else
+							{
+								getdir(Directory.GetCurrentDirectory());
+
+							}
+							about();
+							break;
+						*/
+						//terminal
+						case "cls":
+							Console.Clear();
+							break;
+						case "pause":
+							Console.Write("Press any key to continue . . . ");
+							Console.ReadKey();
+							Console.Write("\n");
+							break;
+						case "echo":
+							Console.WriteLine(i1.Remove(0, 5));
+							break;
+						//scripts
+						case "term":
+							//result = input.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+							if (ilist.Length > 1)
+							{
+								if (ilist[1] == "scripts")
+								{
+									string text = Term.Edit();
+									Console.Clear();
+									if (!String.IsNullOrEmpty(text))
+									{
+										Console.Write("Name: ");
+										string name = Console.ReadLine().ToLower();
+										try
+										{
+											scripts.Add(name, text);
+										}
+										catch
+										{
+											Console.Write("Are you sure you want to overwrite? ");
+											if (Console.ReadLine().ToLower() == "yes")
+											{
+												scripts[name] = text;
+											}
+										}
+									}
+
+								}
+								else if (ilist[1] == "run")
+								{
+									try
+									{
+										//Console.Clear();
+										inputs = scripts[ilist[2]].Split("\n", StringSplitOptions.RemoveEmptyEntries);
+										//Console.Clear();
+										//Console.WriteLine(scripts[ilist[2]]);
+										isscript = true;
+									}
+									catch
+									{
+										Console.WriteLine("Invalid! use `term list` to list term scripts");
+									}
+								}
+								else if (ilist[1] == "type")
+								{
+									try
+									{
+										Console.WriteLine(scripts[ilist[2]].ToString());
+									}
+									catch
+									{
+										Console.WriteLine("Invalid! use `term list` to list term scripts");
+									}
+									break;
+								}
+								else if (ilist[1] == "list")
+								{
+									foreach (string x in scripts.Keys)
+									{
+										Console.WriteLine(x);
+									}
+								}
+							}
+							else
+							{
+								Console.ForegroundColor = ConsoleColor.Green;
+								Console.WriteLine("term scripts:");
+								Console.ForegroundColor = ConsoleColor.Blue;
+								Console.WriteLine("term new - new script");
+								Console.WriteLine("term list - list scripts");
+								Console.WriteLine("term run {scriptname} - run script");
+								Console.WriteLine("term type {scriptname} - type contents of script");
+								Console.ForegroundColor = ConsoleColor.White;
+							}
+							break;
+						//apps
+						case "calc":
+							//Console.ForegroundColor = ConsoleColor.Blue;
+							Console.WriteLine("calc " + calcver);
+							//Console.ForegroundColor = ConsoleColor.White;
+							Console.WriteLine("Evaluate expression:");
+							EvaluateString.Run();
+							break;
+						case "crypt":
+							//Console.ForegroundColor = ConsoleColor.Blue;
+							Console.WriteLine("crypt " + cryptver);
+							//Console.ForegroundColor = ConsoleColor.White;
+							Encrypt.Run();
+							break;
+						//games
+						case "xox":
+							//Console.ForegroundColor = ConsoleColor.Blue;
+							Console.WriteLine("xox " + xoxver);
+							//Console.ForegroundColor = ConsoleColor.White;
+							XOX.Run();
+							break;
+						//no reason
+						case "hello":
+							Console.WriteLine("Hello World");
+							break;
+						case "zen":
+							Console.WriteLine("The Zen of Python, by Tim Peters\n\nBeautiful is better than ugly.\nExplicit is better than implicit.\nSimple is better than complex.\nComplex is better than complicated.\nFlat is better than nested.\nSparse is better than dense.\nReadability counts.\nSpecial cases aren't special enough to break the rules.\nAlthough practicality beats purity.\nErrors should never pass silently.\nUnless explicitly silenced.\nIn the face of ambiguity, refuse the temptation to guess.\nThere should be one-- and preferably only one --obvious way to do it.\nAlthough that way may not be obvious at first unless you're Dutch.\nNow is better than never.\nAlthough never is often better than *right* now.\nIf the implementation is hard to explain, it's a bad idea.\nIf the implementation is easy to explain, it may be a good idea.\nNamespaces are one honking great idea -- let's do more of those!");
+							break;
+						//default
+						default:
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("\"" + i1 + "\"" + " is not a command!");
+							Console.ForegroundColor = ConsoleColor.White;
+							break;
+					}
+				}
+				//Console.WriteLine(inputs.ToString());
+
+				
 			}
         }
 		static void about()
@@ -171,6 +277,15 @@ namespace ebOS
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("cls - clear terminal");
 			Console.WriteLine("echo - echo text");
+			Console.WriteLine("pause - pause");
+			Console.WriteLine("");
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("term scripts:");
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("term new - new script");
+			Console.WriteLine("term list - list scripts");
+			Console.WriteLine("term run {scriptname} - run script");
+			Console.WriteLine("term type {scriptname} - type contents of script");
 			Console.WriteLine("");
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("apps:");

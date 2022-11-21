@@ -75,24 +75,32 @@ namespace ebOS
                     string col = Console.ReadLine();
                     Console.Write("row: ");
                     string row = Console.ReadLine();
-                    try
+                    if (col == "exit" || row == "exit")
                     {
-                        int colint = int.Parse(col);
-                        int rowint = int.Parse(row);
-                        if ((colint >= 1 && colint <= 3) && (rowint >= 1 && rowint <= 3))
+                        good = true;
+                        dorun = false;
+                    }
+                    else
+                    {
+                        try
                         {
-                            game[rowint - 1][colint - 1] = c;
-                            good = true;
-                            turn++;
+                            int colint = int.Parse(col);
+                            int rowint = int.Parse(row);
+                            if ((colint >= 1 && colint <= 3) && (rowint >= 1 && rowint <= 3))
+                            {
+                                game[rowint - 1][colint - 1] = c;
+                                good = true;
+                                turn++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not A Number 1-3!");
+                            }
                         }
-                        else
+                        catch
                         {
                             Console.WriteLine("Not A Number 1-3!");
                         }
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Not A Number 1-3!");
                     }
                     
                 }
