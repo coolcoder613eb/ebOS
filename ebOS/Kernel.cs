@@ -12,6 +12,7 @@ namespace ebOS
 		private const string ver = "1.0.0";
 		private const string calcver = "1.0.0";
 		private const string cryptver = "1.0.0";
+		private const string xoxver = "1.0.0";
 
 		protected override void BeforeRun()
         {
@@ -113,6 +114,13 @@ namespace ebOS
 						//Console.ForegroundColor = ConsoleColor.White;
 						Encrypt.Run();
 						break;
+					//games
+					case "xox":
+						//Console.ForegroundColor = ConsoleColor.Blue;
+						Console.WriteLine("xox " + xoxver);
+						//Console.ForegroundColor = ConsoleColor.White;
+						XOX.Run();
+						break;
 					//no reason
 					case "hello":
 						Console.WriteLine("Hello World");
@@ -123,7 +131,7 @@ namespace ebOS
 					//default
 					default:
 						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine("\"" + i + "\"" + " is not a command!");
+						Console.WriteLine("\"" + i1 + "\"" + " is not a command!");
 						Console.ForegroundColor = ConsoleColor.White;
 						break;
 				}
