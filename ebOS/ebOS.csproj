@@ -140,7 +140,7 @@
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="echo Finished!" />
+      <Exec Command="echo Finished building DLL!" />
     </Target>
 
 </Project>

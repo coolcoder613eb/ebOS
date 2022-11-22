@@ -17,7 +17,7 @@ namespace ebOS
             {
                 text += Console.ReadLine();
                 text += "\n";
-                key = Console.ReadKey();
+                key = Console.ReadKey(true);
             }
             while (key.Key != ConsoleKey.Tab && key.Key != ConsoleKey.Escape);
             if (key.Key == ConsoleKey.Tab)

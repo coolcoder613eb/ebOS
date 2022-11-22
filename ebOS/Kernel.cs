@@ -13,7 +13,7 @@ namespace ebOS
 		private const string calcver = "1.0.0";
 		private const string cryptver = "1.0.0";
 		private const string xoxver = "1.0.0";
-		static Dictionary<string, string> scripts = new Dictionary<string, string>();
+		//static 
 		
 
 		protected override void BeforeRun()
@@ -23,9 +23,10 @@ namespace ebOS
 
         protected override void Run()
         {
+			Dictionary<string, string> scripts = new() {
+				{ "ysnp", "cls\necho Gandalf - YOU SHALL NOT PASS!\necho Balrog - Why not?\npause\necho Gandalf - BECAUSE I'M IN A RUSH!" },{ "sc", "echo Scripts:\nterm list\n" } };
 			string[] p = { };
-			scripts.Add("ysnp", "cls\necho Gandalf - YOU SHALL NOT PASS!\necho Balrog - Why not?\npause\necho Gandalf - BECAUSE I'M IN A RUSH!");
-			scripts.Add("s", "echo Scripts:\nterm list");
+			//scripts["scr"] = "echo Scripts:\nterm list\n";
 			/*scripts.Add("ysnp", @"echo Gandalf - YOU SHALL NOT PASS!
 echo Balrog - Why not?
 pause
@@ -57,6 +58,11 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 			string[] inputs = p;
 			bool isscript = false;
 			string i2 = "";
+			/*foreach (KeyValuePair<string, string> kvp in scripts)
+			{
+				Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+			}*/
+
 			while (true)
 			{
 				
@@ -132,7 +138,7 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 							//result = input.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 							if (ilist.Length > 1)
 							{
-								if (ilist[1] == "scripts")
+								if (ilist[1] == "new")
 								{
 									string text = Term.Edit();
 									Console.Clear();
@@ -160,13 +166,16 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 									try
 									{
 										//Console.Clear();
+										/*Console.WriteLine("scr == ilist[2]"+("scr" == ilist[2]));
+										Console.WriteLine($"scripts.Keys.Contains(\"{ilist[2]}\") = "+scripts.Keys.Contains(ilist[2]));*/
 										inputs = scripts[ilist[2]].Split("\n", StringSplitOptions.RemoveEmptyEntries);
 										//Console.Clear();
 										//Console.WriteLine(scripts[ilist[2]]);
 										isscript = true;
 									}
-									catch
+									catch(Exception e)
 									{
+										//Console.WriteLine(e.ToString());
 										Console.WriteLine("Invalid! use `term list` to list term scripts");
 									}
 								}
@@ -176,8 +185,9 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 									{
 										Console.WriteLine(scripts[ilist[2]].ToString());
 									}
-									catch
+									catch(Exception e)
 									{
+										//Console.WriteLine(e.ToString());
 										Console.WriteLine("Invalid! use `term list` to list term scripts");
 									}
 									break;
@@ -251,6 +261,7 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 		}
 		static void help()
 		{
+			Console.Clear();////////////////////
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("ebOS " + ver);
 			Console.ForegroundColor = ConsoleColor.Blue;
@@ -268,11 +279,6 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 			Console.WriteLine("help - show this help message");
 			Console.WriteLine("");
 			Console.ForegroundColor = ConsoleColor.Green;
-			Console.WriteLine("other:");
-			Console.ForegroundColor = ConsoleColor.Blue;
-			Console.WriteLine("zen - show the zen of python");
-			Console.WriteLine("");
-			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("terminal:");
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("cls - clear terminal");
@@ -287,12 +293,23 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 			Console.WriteLine("term run {scriptname} - run script");
 			Console.WriteLine("term type {scriptname} - type contents of script");
 			Console.WriteLine("");
+			Console.ForegroundColor = ConsoleColor.White;
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey();
+			Console.Write("\n");
+			Console.Clear();////////////
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("apps:");
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("calc - calculator ");
 			Console.WriteLine("crypt - encrypt and decrypt messages");
 			Console.ForegroundColor = ConsoleColor.White;
+			Console.WriteLine("");
+			Console.ForegroundColor = ConsoleColor.White;
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey();
+			Console.Write("\n");
+			Console.Clear();/////////////
 		}
 
 	}
