@@ -7,8 +7,8 @@ using Sys = Cosmos.System;
 
 namespace ebOS
 {
-    public class Kernel : Sys.Kernel
-    {
+	public class Kernel : Sys.Kernel
+	{
 		private const string ver = "1.0.0";
 		private const string calcver = "1.0.0";
 		private const string cryptver = "1.0.0";
@@ -17,14 +17,17 @@ namespace ebOS
 		
 
 		protected override void BeforeRun()
-        {
-            Console.WriteLine("ebOS booted successfully.");
-        }
+		{
+			Console.WriteLine("ebOS booted successfully.");
+		}
 
-        protected override void Run()
-        {
+		protected override void Run()
+		{
 			Dictionary<string, string> scripts = new() {
-				{ "ysnp", "cls\necho Gandalf - YOU SHALL NOT PASS!\necho Balrog - Why not?\npause\necho Gandalf - BECAUSE I'M IN A RUSH!" },{ "sc", "echo Scripts:\nterm list\n" } };
+				{ "ysnp", "cls\necho Gandalf - YOU SHALL NOT PASS!\necho Balrog - Why not?\npause\necho Gandalf - BECAUSE I'M IN A RUSH!" },
+				{ "sc", "echo Scripts:\nterm list\n" },
+				{ "scrhow", "echo How To Write Term Scripts\npause\ncls\necho How To Write Term Scripts\necho  \necho Term scripts are a feature of ebOS,\necho similar to shell scripting.\necho You may write any command\necho which can be used in the terminal.\necho Due to there only four terminal commands\necho (echo, pause, cls and ```), the main function\necho of term scripts seems to be to tell a story,\necho a joke, or to be a manual of some kind.\necho `pause' could be employed before the \necho punchline of a joke, as so;\npause\n```\necho echo Why did the chicken cross the road?\necho pause\necho echo To get to the other side!\n```\necho to run it;\npause\necho Why did the chicken cross the road?\npause\necho To get to the other side!\necho Commands:\npause\ncls\necho Commands:\necho echo:\necho echo's text back to you\necho  \necho pause:\necho pauses execution,\necho and displays the message:\necho Press any key to continue . . .\necho  \necho cls:\necho clears the console\necho  \necho ```:\necho start and end of a code block\necho (will execute commands within)" }
+			};
 			string[] p = { };
 			//scripts["scr"] = "echo Scripts:\nterm list\n";
 			/*scripts.Add("ysnp", @"echo Gandalf - YOU SHALL NOT PASS!
@@ -40,9 +43,9 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 			Console.Clear();
 			Console.ForegroundColor = ConsoleColor.Green;
 			string ebos = @"
-           ##
-           ##         ####     #####
-           ##        ##  ##   ##   ##
+		   ##
+		   ##         ####     #####
+		   ##        ##  ##   ##   ##
    #####   ######   ##    ##  ##
   ##   ##  ##   ##  ##    ##   #####
   #######  ##   ##  ##    ##       ##
@@ -62,7 +65,7 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 			{
 				Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
 			}*/
-
+			int ticks = 0;
 			while (true)
 			{
 				
@@ -78,7 +81,7 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 				string[] inputs2 = { i2 };
 
 				foreach (string i1 in inputs)
-                {
+				{
 					string i = i1.ToLower();
 					string[] ilist = i.Split(' ');
 					switch (ilist[0])
@@ -122,6 +125,19 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 							break;
 						*/
 						//terminal
+						case "```":
+							if ((ticks % 2) == 0)
+							{
+								Console.BackgroundColor = ConsoleColor.Gray;
+								Console.ForegroundColor = ConsoleColor.Black;
+							}
+							else
+							{
+								Console.BackgroundColor = ConsoleColor.Black;
+								Console.ForegroundColor = ConsoleColor.White;
+							}
+							ticks++;
+							break;
 						case "cls":
 							Console.Clear();
 							break;
@@ -146,16 +162,19 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 									{
 										Console.Write("Name: ");
 										string name = Console.ReadLine().ToLower();
-										try
+										if (!string.IsNullOrWhiteSpace(name))
 										{
-											scripts.Add(name, text);
-										}
-										catch
-										{
-											Console.Write("Are you sure you want to overwrite? ");
-											if (Console.ReadLine().ToLower() == "yes")
+											try
 											{
-												scripts[name] = text;
+												scripts.Add(name, text);
+											}
+											catch
+											{
+												Console.Write("Are you sure you want to overwrite? ");
+												if (Console.ReadLine().ToLower() == "yes")
+												{
+													scripts[name] = text;
+												}
 											}
 										}
 									}
@@ -176,7 +195,7 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 									catch(Exception e)
 									{
 										//Console.WriteLine(e.ToString());
-										Console.WriteLine("Invalid! use `term list` to list term scripts");
+										Console.WriteLine("Invalid! use `term list' to list term scripts");
 									}
 								}
 								else if (ilist[1] == "type")
@@ -184,11 +203,12 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 									try
 									{
 										Console.WriteLine(scripts[ilist[2]].ToString());
+										
 									}
 									catch(Exception e)
 									{
 										//Console.WriteLine(e.ToString());
-										Console.WriteLine("Invalid! use `term list` to list term scripts");
+										Console.WriteLine("Invalid! use `term list' to list term scripts");
 									}
 									break;
 								}
@@ -252,7 +272,7 @@ echo Gandalf - BECAUSE I'M IN A RUSH!");*/
 
 				
 			}
-        }
+		}
 		static void about()
 		{
 			Console.ForegroundColor = ConsoleColor.Blue;
