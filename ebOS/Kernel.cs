@@ -9,7 +9,7 @@ namespace ebOS
 {
 	public class Kernel : Sys.Kernel
 	{
-		private const string ver = "1.0.0";
+		private const string ver = "1.0.0"; 
 		private const string calcver = "1.0.0";
 		private const string cryptver = "1.0.0";
 		private const string xoxver = "1.0.0";
