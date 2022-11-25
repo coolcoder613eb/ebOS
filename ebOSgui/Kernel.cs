@@ -10,6 +10,7 @@ using Cosmos.Core.IOGroup;
 using System.Threading;
 using Cosmos.System;
 using System.Reflection;
+using System.Net.Sockets;
 
 namespace ebOS
 {
@@ -22,7 +23,7 @@ namespace ebOS
         private const string cryptver = "1.0.0";
         private const string xoxver = "1.0.0";
         //static 
-
+        static Sys.Graphics.Point bp = new Sys.Graphics.Point(30, 30);static int bw = 60;static int bh = 30;
 
         protected override void BeforeRun()
         {
@@ -38,6 +39,7 @@ namespace ebOS
 
             Sys.MouseManager.X = (uint)((int)canvas.Mode.Columns / 2);
             Sys.MouseManager.Y = (uint)((int)canvas.Mode.Rows / 2);
+            drawbutton();
         }
 
         protected override void Run()
@@ -80,16 +82,25 @@ namespace ebOS
         static void drawscreen()
         {
             canvas.Clear(Color.Green);
+            drawbutton();
             button();
             drawmouse();
             canvas.Display();
 
         }
-        static void button()
+        static void drawbutton()
         {
-            Sys.Graphics.Point bp = new Sys.Graphics.Point(30, 30); int bw = 60; int bh = 30;
+            
             Pen blackpen = new Pen(Color.Black);
-            canvas.DrawRectangle(blackpen, bp, bw, bh);
+            Pen whitepen = new Pen(Color.White);
+            canvas.DrawFilledRectangle(blackpen, bp, bw, bh);
+            //canvas.DrawString("shutdown", whitepen,new Sys.Graphics.Fonts.PCScreenFont,new Sys.Graphics.Point(32, 32));
+            //Bitmap shutdown = new Bitmap(120, 30, images.shutdown, ColorDepth.ColorDepth32);
+            //canvas.DrawImage(shutdown, new Sys.Graphics.Point(32, 32));
+        }
+            static void button()
+        {
+            
             if (isclick(bp, bw, bh))
             {
                 Sys.Power.Shutdown();
