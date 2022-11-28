@@ -53,7 +53,8 @@ namespace ebOS
             catch (Exception e)
             {
                 //mDebugger.Send("Exception occurred: " + e.Message);
-                Sys.Power.Shutdown();
+                canvas.Disable();
+                System.Console.WriteLine(e);
             }
         }
         static void drawmouse()
@@ -94,9 +95,10 @@ namespace ebOS
             Pen blackpen = new Pen(Color.Black);
             Pen whitepen = new Pen(Color.White);
             canvas.DrawFilledRectangle(blackpen, bp, bw, bh);
+            //canvas.DrawArc(32, 32, 10, 20, whitepen, 180, 0);
             //canvas.DrawString("shutdown", whitepen,new Sys.Graphics.Fonts.PCScreenFont,new Sys.Graphics.Point(32, 32));
             //Bitmap shutdown = new Bitmap(120, 30, images.shutdown, ColorDepth.ColorDepth32);
-            //canvas.DrawImage(shutdown, new Sys.Graphics.Point(32, 32));
+            //canvas.DrawImage(images.shutdown, new Sys.Graphics.Point(32, 32));
         }
             static void button()
         {
