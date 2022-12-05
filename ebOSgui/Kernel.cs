@@ -23,7 +23,9 @@ namespace ebOS
         private const string cryptver = "1.0.0";
         private const string xoxver = "1.0.0";
         //static 
-        static Sys.Graphics.Point bp = new Sys.Graphics.Point(30, 30);static int bw = 60;static int bh = 30;
+        static Sys.Graphics.Point sbp = new Sys.Graphics.Point(30, 30);
+        static int bw = 60;static int bh = 30;
+        static Sys.Graphics.Point rbp = new Sys.Graphics.Point(120, 30);
 
         protected override void BeforeRun()
         {
@@ -39,14 +41,15 @@ namespace ebOS
 
             Sys.MouseManager.X = (uint)((int)canvas.Mode.Columns / 2);
             Sys.MouseManager.Y = (uint)((int)canvas.Mode.Rows / 2);
-            drawbutton();
+            DrawButton(sbp);
+            DrawButton(rbp);
         }
 
         protected override void Run()
         {
             try
             {
-                drawscreen();
+                DrawScreen();
 
 
             }
@@ -57,7 +60,7 @@ namespace ebOS
                 System.Console.WriteLine(e);
             }
         }
-        static void drawmouse()
+        static void DrawMouse()
         {
             Pen bluepen = new Pen(Color.Cyan);
             canvas.DrawPoint(bluepen, new Sys.Graphics.Point((int)Cosmos.System.MouseManager.X, (int)Cosmos.System.MouseManager.Y));
@@ -80,16 +83,18 @@ namespace ebOS
                 return false;
             }
         }
-        static void drawscreen()
+        static void DrawScreen()
         {
             canvas.Clear(Color.Green);
-            drawbutton();
-            button();
-            drawmouse();
+            DrawButton(sbp);
+            DrawButton(rbp);
+            Button(sbp);
+            Button(rbp);
+            DrawMouse();
             canvas.Display();
 
         }
-        static void drawbutton()
+        static void DrawButton(Sys.Graphics.Point bp)
         {
             
             Pen blackpen = new Pen(Color.Black);
@@ -100,7 +105,7 @@ namespace ebOS
             //Bitmap shutdown = new Bitmap(120, 30, images.shutdown, ColorDepth.ColorDepth32);
             //canvas.DrawImage(images.shutdown, new Sys.Graphics.Point(32, 32));
         }
-            static void button()
+            static void Button(Sys.Graphics.Point bp)
         {
             
             if (isclick(bp, bw, bh))
